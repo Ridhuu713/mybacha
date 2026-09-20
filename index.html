@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Letter for My Diku ❤️</title>
+  
+  <!-- Romantic Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Marck+Script&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg-cream: #faf6f0;
+      --paper-cream: #fffdf9;
+      --paper-border: #f0e6da;
+      --text-ink: #322b27;
+      --accent-rose: #d9777f;
+      --shadow-warm: rgba(74, 52, 43, 0.08);
+      --font-body: 'Cormorant Garamond', Georgia, serif;
+      --font-handwriting: 'Caveat', cursive;
+      --font-signature: 'Marck Script', cursive;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-cream);
+      background-image: 
+        radial-gradient(#ecdcd0 0.75px, transparent 0.75px),
+        radial-gradient(#f7efe9 0.75px, var(--bg-cream) 0.75px);
+      background-size: 30px 30px;
+      background-position: 0 0, 15px 15px;
+      font-family: var(--font-body);
+      color: var(--text-ink);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Ambient floating particles */
+    .ambient-particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .particle {
+      position: absolute;
+      color: rgba(224, 142, 149, 0.35);
+      font-size: 14px;
+      animation: floatUpward linear infinite;
+    }
+    @keyframes floatUpward {
+      0% {
+        transform: translateY(105vh) scale(0.8) rotate(0deg);
+        opacity: 0;
+      }
+      20% { opacity: 0.6; }
+      80% { opacity: 0.6; }
+      100% {
+        transform: translateY(-10vh) scale(1.1) rotate(45deg);
+        opacity: 0;
+      }
+    }
+
+    /* Music Button */
+    .music-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid #ebdcd5;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: var(--accent-rose);
+      box-shadow: 0 4px 14px var(--shadow-warm);
+      transition: all 0.3s ease;
+      z-index: 100;
+    }
+    .music-btn:hover {
+      transform: scale(1.06);
+      background: #ffffff;
+      border-color: var(--accent-rose);
+    }
+    .music-btn.playing {
+      animation: pulseMusic 2s infinite ease-in-out;
+    }
+    @keyframes pulseMusic {
+      0%, 100% { transform: scale(1); box-shadow: 0 4px 14px var(--shadow-warm); }
+      50% { transform: scale(1.08); box-shadow: 0 4px 20px rgba(217, 119, 127, 0.3); }
+    }
+
+    /* Stage Wrapper */
+    .envelope-stage {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 640px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      perspective: 1200px;
+    }
+
+    /* Realistic 3D Envelope */
+    .envelope-box {
+      width: 290px;
+      height: 190px;
+      background: #e9dfd4;
+      border-radius: 10px;
+      position: relative;
+      cursor: pointer;
+      box-shadow: 0 16px 36px rgba(92, 70, 58, 0.14);
+      perspective: 800px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .envelope-box:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 42px rgba(92, 70, 58, 0.18);
+    }
+    .envelope-pocket {
+      position: absolute;
+      inset: 0;
+      background: #dfd3c5;
+      border-radius: 10px;
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+      z-index: 2;
+    }
+    .envelope-pocket::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: #e8ddd0;
+      clip-path: polygon(0% 100%, 50% 48%, 100% 100%);
+      z-index: 4;
+    }
+    .envelope-pocket::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: #ebdcd0;
+      clip-path: polygon(0 0, 0 100%, 50% 50%);
+      z-index: 3;
+    }
+    .envelope-right-fold {
+      position: absolute;
+      inset: 0;
+      background: #e3d5c6;
+      clip-path: polygon(100% 0, 100% 100%, 50% 50%);
+      z-index: 3;
+    }
+    .envelope-flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 105px;
+      background: #d8c9ba;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      transform-origin: top;
+      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 5;
+    }
+    .envelope-box.opened .envelope-flap {
+      transform: rotateX(180deg);
+      z-index: 1;
+    }
+    .envelope-seal {
+      position: absolute;
+      top: 86px;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 44px;
+      height: 44px;
+      background: radial-gradient(circle at 30% 30%, #e28189, #c35962);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 18px;
+      box-shadow: 0 4px 10px rgba(184, 76, 86, 0.4);
+      z-index: 6;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .envelope-box.opened .envelope-seal {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0.6);
+      pointer-events: none;
+    }
+
+    .open-prompt-btn {
+      margin-top: 32px;
+      padding: 12px 28px;
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid #ebdcd5;
+      color: var(--accent-rose);
+      font-family: var(--font-body);
+      font-size: 18px;
+      font-weight: 600;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px var(--shadow-warm);
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .open-prompt-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 26px rgba(217, 119, 127, 0.2);
+      background: #fff;
+    }
+
+    /* Paper Sheets */
+    .letter-sheet {
+      display: none;
+      width: 100%;
+      max-width: 580px;
+      background: var(--paper-cream);
+      border: 1px solid var(--paper-border);
+      border-radius: 12px;
+      padding: 46px 36px;
+      position: relative;
+      box-shadow: 
+        0 1px 1px rgba(0,0,0,0.02),
+        0 8px 30px var(--shadow-warm),
+        0 24px 60px rgba(74, 52, 43, 0.06);
+      opacity: 0;
+      transform: translateY(24px) scale(0.97);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .letter-sheet.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .letter-sheet::before {
+      content: "";
+      position: absolute;
+      inset: 12px;
+      border: 1px solid rgba(222, 203, 190, 0.45);
+      border-radius: 8px;
+      pointer-events: none;
+    }
+
+    /* Page Turn Animation */
+    .turning-out {
+      animation: turnPageOut 0.75s forwards cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .turning-in {
+      animation: turnPageIn 0.75s forwards cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @keyframes turnPageOut {
+      0% { opacity: 1; transform: rotateY(0deg) scale(1); }
+      100% { opacity: 0; transform: rotateY(-75deg) scale(0.92); }
+    }
+    @keyframes turnPageIn {
+      0% { opacity: 0; transform: rotateY(75deg) scale(0.92); }
+      100% { opacity: 1; transform: rotateY(0deg) scale(1); }
+    }
+
+    .letter-header {
+      font-family: var(--font-handwriting);
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--accent-rose);
+      margin-bottom: 20px;
+      letter-spacing: 0.5px;
+      line-height: 1.2;
+    }
+
+    .letter-body {
+      font-size: 20px;
+      line-height: 1.85;
+      color: var(--text-ink);
+      font-weight: 400;
+      letter-spacing: 0.2px;
+      white-space: pre-wrap;
+    }
+
+    .letter-paragraph {
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    /* INLINE GLUED CARET (No extra lines, no empty gaps) */
+    .caret {
+      display: inline-block;
+      width: 2px;
+      height: 1.15em;
+      background-color: var(--accent-rose);
+      margin-left: 2px;
+      vertical-align: -2px;
+      animation: blink 0.85s infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    .letter-footer {
+      margin-top: 32px;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 1.2s ease, transform 1.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+    .letter-footer.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .signature-text {
+      font-family: var(--font-signature);
+      font-size: 32px;
+      color: var(--accent-rose);
+      line-height: 1.35;
+      text-align: right;
+      letter-spacing: 0.5px;
+    }
+
+    .button-group-container {
+      margin-top: 32px;
+      opacity: 0;
+      transition: opacity 1s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+    .button-group-container.visible {
+      opacity: 1;
+    }
+
+    .action-btn {
+      background: #ffffff;
+      border: 1px solid #ebdcd5;
+      padding: 11px 24px;
+      border-radius: 28px;
+      font-family: var(--font-body);
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--accent-rose);
+      cursor: pointer;
+      box-shadow: 0 4px 14px var(--shadow-warm);
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .action-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(217, 119, 127, 0.22);
+      border-color: var(--accent-rose);
+    }
+
+    .secondary-btn {
+      background: transparent;
+      border: 1px solid #dfcfc4;
+      padding: 10px 20px;
+      border-radius: 24px;
+      font-family: var(--font-body);
+      font-size: 15px;
+      color: #7b6559;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .secondary-btn:hover {
+      background: #ffffff;
+      color: var(--accent-rose);
+      border-color: var(--accent-rose);
+    }
+
+    .completion-hearts {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+      width: 100%;
+      height: 100px;
+    }
+    .drift-heart {
+      position: absolute;
+      color: var(--accent-rose);
+      font-size: 16px;
+      opacity: 0;
+      animation: driftFloat 3.8s ease-out forwards;
+    }
+    @keyframes driftFloat {
+      0% { opacity: 0; transform: translate(0, 0) scale(0.6); }
+      25% { opacity: 0.8; }
+      100% { opacity: 0; transform: translate(var(--dx), -90px) scale(1.2); }
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 18px 12px; }
+      .letter-sheet { padding: 32px 20px; }
+      .letter-header { font-size: 30px; margin-bottom: 18px; }
+      .letter-body { font-size: 18px; line-height: 1.78; }
+      .signature-text { font-size: 28px; }
+      .music-btn { top: 14px; right: 14px; width: 38px; height: 38px; font-size: 16px; }
+      .action-btn { font-size: 15px; padding: 10px 20px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .particle, .caret, .music-btn.playing { animation: none !important; }
+      .letter-sheet, .envelope-flap { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating subtle particles -->
+  <div class="ambient-particles" id="ambientParticles"></div>
+
+  <!-- Soft Romantic Piano Toggle (Built-in Web Audio API) -->
+  <button class="music-btn" id="musicToggle" title="Play soft romantic melody" aria-label="Toggle Romantic Music">♪</button>
+
+  <div class="envelope-stage">
+    
+    <!-- ENVELOPE INTRO -->
+    <div id="envelopeSection" style="display: flex; flex-direction: column; align-items: center;">
+      <div class="envelope-box" id="envelope">
+        <div class="envelope-flap"></div>
+        <div class="envelope-pocket"></div>
+        <div class="envelope-right-fold"></div>
+        <div class="envelope-seal">💌</div>
+      </div>
+      <button class="open-prompt-btn" id="openBtn">Open Letter 💌</button>
+    </div>
+
+    <!-- PAGE 1: THE MAIN LETTER -->
+    <article class="letter-sheet" id="letterSheetPage1">
+      <header class="letter-header" id="letterHeaderPage1"></header>
+      <div class="letter-body" id="letterContentPage1"></div>
+
+      <footer class="letter-footer" id="letterFooterPage1">
+        <div class="signature-text">
+          Always yours,<br />
+          Ridham ❤️
+        </div>
+      </footer>
+
+      <div class="completion-hearts" id="completionHeartsPage1"></div>
+    </article>
+
+    <!-- BUTTONS AFTER PAGE 1 -->
+    <div class="button-group-container" id="page1Controls">
+      <button class="action-btn" id="goToPage2Btn">One Last Thing, Diku… 💌</button>
+      <button class="secondary-btn" id="replayPage1Btn">Read Again</button>
+    </div>
+
+    <!-- PAGE 2: ONE LAST THING -->
+    <article class="letter-sheet" id="letterSheetPage2">
+      <header class="letter-header" id="letterHeaderPage2"></header>
+      <div class="letter-body" id="letterContentPage2"></div>
+
+      <footer class="letter-footer" id="letterFooterPage2">
+        <div class="signature-text">
+          Forever yours,<br />
+          Ridhu ❤️
+        </div>
+      </footer>
+
+      <div class="completion-hearts" id="completionHeartsPage2"></div>
+    </article>
+
+    <!-- BUTTONS AFTER PAGE 2 -->
+    <div class="button-group-container" id="page2Controls">
+      <button class="action-btn" id="backToPage1Btn">← Back to Page 1</button>
+      <button class="secondary-btn" id="fullResetBtn">Restart Envelope 💌</button>
+    </div>
+
+  </div>
+
+  <script>
+    /* PAGE 1 CONTENT */
+    const page1Salutation = "To My Bachaa ❤️";
+    const page1Paragraphs = [
+      "Chholly bacha ik tame naraz choo manvvu maru farz che mein kidhelu n manvva mate letter lakhis etle...",
+      "Sambhd ik hun kharab bf chu khrab gaal dav kharab bolu je bi mein kai karyu etc hun badhe kharab bani gyo",
+      "Mare kn joiti i swear mein kale ek bi chhokari n joi j naii khrab najare sache trust me!",
+      "And...Vadhare mathu nai khav bs etlu kais k bachu mare tane ekli nahi mukvi samjhne mari jode to frds che tari jode ee bi nathi sara mane rehva dene jevo chu evo tu mari jode khush rahis n bacha bs to! Hun surety nathi apto pan Hun tne aa vakht ee naraz nhi feel krav bs k tu mari jode khoti relation ma",
+      "Bs mare che n tari jode ane tare mari jode rehvaanu che bs etlu j kehva ane samjvva mate lakhu chu aa letter tare rehvanu che mari jode km k tara sivay mne koi nai sambhali ske ane mare tara vagar rehvu nathi ane nathi tane java devi mare kyay ok..? ",
+      "Agar really ichha thay n mari jode relationship ma rehvani k mane maaf krine mari jode avvani toh please msg me on wp to star conversation with ILYSM ridhuuuu",
+      "Bcz... I loveee youuu too mara bachaaa 🥺❤️"
+    ];
+
+    const page1Pauses = [
+      "Agar really ichha thay n mari jode relationship ma rehvani k mane maaf krine mari jode avvani toh please msg me on wp to star conversation with ILYSM ridhuuuu",
+      "Bcz... I loveee youuu too mara bachaaa 🥺❤️"
+
+    ];
+
+    /* PAGE 2 CONTENT */
+    const page2Salutation = "One Last Thing, Diku… ❤️";
+    const page2Paragraphs = [
+"Ama kai j naiii...!!",
+      "Tane evu lage n k hun love kru chu tane to j mne reply krje ee bi wp pr j jem kidhu em 🥺"
+    ];
+
+    const page2Pauses = [
+   
+    ];
+
+    /* DOM ELEMENTS */
+    const envelope = document.getElementById('envelope');
+    const openBtn = document.getElementById('openBtn');
+    const envelopeSection = document.getElementById('envelopeSection');
+
+    // Page 1
+    const letterSheetPage1 = document.getElementById('letterSheetPage1');
+    const letterHeaderPage1 = document.getElementById('letterHeaderPage1');
+    const letterContentPage1 = document.getElementById('letterContentPage1');
+    const letterFooterPage1 = document.getElementById('letterFooterPage1');
+    const page1Controls = document.getElementById('page1Controls');
+    const goToPage2Btn = document.getElementById('goToPage2Btn');
+    const replayPage1Btn = document.getElementById('replayPage1Btn');
+    const completionHeartsPage1 = document.getElementById('completionHeartsPage1');
+
+    // Page 2
+    const letterSheetPage2 = document.getElementById('letterSheetPage2');
+    const letterHeaderPage2 = document.getElementById('letterHeaderPage2');
+    const letterContentPage2 = document.getElementById('letterContentPage2');
+    const letterFooterPage2 = document.getElementById('letterFooterPage2');
+    const page2Controls = document.getElementById('page2Controls');
+    const backToPage1Btn = document.getElementById('backToPage1Btn');
+    const fullResetBtn = document.getElementById('fullResetBtn');
+    const completionHeartsPage2 = document.getElementById('completionHeartsPage2');
+
+    const ambientParticles = document.getElementById('ambientParticles');
+    const musicToggle = document.getElementById('musicToggle');
+
+    // Shared dynamic caret
+    const cursor = document.createElement('span');
+    cursor.className = 'caret';
+
+    let cancelTyping = false;
+
+    function createAmbientParticles() {
+      ambientParticles.innerHTML = '';
+      const count = 12;
+      for (let i = 0; i < count; i++) {
+        const span = document.createElement('span');
+        span.className = 'particle';
+        span.textContent = Math.random() > 0.5 ? '♡' : '🌸';
+        span.style.left = Math.random() * 96 + '%';
+        span.style.animationDuration = (9 + Math.random() * 11) + 's';
+        span.style.animationDelay = (Math.random() * 8) + 's';
+        ambientParticles.appendChild(span);
+      }
+    }
+    createAmbientParticles();
+
+    function splitGraphemes(str) {
+      if (typeof Intl !== 'undefined' && Intl.Segmenter) {
+        const segmenter = new Intl.Segmenter('en', { granularity: 'grapheme' });
+        return Array.from(segmenter.segment(str), s => s.segment);
+      }
+      return Array.from(str);
+    }
+
+    const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+    /* TYPEWRITER WRITER ENGINE (FIXED: CURSOR ATTACHED DIRECTLY TO TEXT) */
+    async function typeHeader(headerEl, text) {
+      headerEl.textContent = '';
+      headerEl.appendChild(cursor);
+      const chars = splitGraphemes(text);
+      let typed = '';
+      for (const ch of chars) {
+        if (cancelTyping) return;
+        typed += ch;
+        headerEl.textContent = typed;
+        headerEl.appendChild(cursor);
+        await wait(55 + Math.random() * 40);
+      }
+      cursor.remove();
+      await wait(450);
+    }
+
+    async function writePage(config) {
+      cancelTyping = false;
+      const {
+        headerEl, salutation, contentEl, paragraphs, pauses,
+        footerEl, controlsEl, heartsEl
+      } = config;
+
+      contentEl.innerHTML = '';
+      footerEl.classList.remove('visible');
+      controlsEl.classList.remove('visible');
+      heartsEl.innerHTML = '';
+
+      // Type Header first
+      await typeHeader(headerEl, salutation);
+      if (cancelTyping) return;
+
+      // Type each paragraph
+      for (let pIndex = 0; pIndex < paragraphs.length; pIndex++) {
+        if (cancelTyping) return;
+
+        const pText = paragraphs[pIndex];
+        const pElement = document.createElement('p');
+        pElement.className = 'letter-paragraph';
+        contentEl.appendChild(pElement);
+        pElement.appendChild(cursor);
+
+        const chars = splitGraphemes(pText);
+        let currentTyped = '';
+
+        for (let i = 0; i < chars.length; i++) {
+          if (cancelTyping) return;
+
+          const ch = chars[i];
+          currentTyped += ch;
+          pElement.textContent = currentTyped;
+          pElement.appendChild(cursor); // Glues cursor right to the letter!
+
+          let delay = 34 + Math.random() * 30;
+
+          if (ch === ',' || ch === ';') {
+            delay = 200 + Math.random() * 80;
+          } else if (ch === '.' || ch === '?' || ch === '!') {
+            delay = 380 + Math.random() * 120;
+          } else if (ch === '…') {
+            delay = 550;
+          }
+
+          for (const phrase of pauses) {
+            if (currentTyped.endsWith(phrase)) {
+              delay = 650;
+              break;
+            }
+          }
+
+          await wait(delay);
+        }
+
+        await wait(360 + Math.random() * 120);
+      }
+
+      // Hide cursor once finished
+      cursor.remove();
+      await wait(300);
+      footerEl.classList.add('visible');
+      triggerCompletionAnimation(heartsEl);
+      await wait(1400);
+      controlsEl.classList.add('visible');
+    }
+
+    function triggerCompletionAnimation(container) {
+      container.innerHTML = '';
+      const totalHearts = 5;
+      for (let i = 0; i < totalHearts; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'drift-heart';
+        heart.textContent = '❤️';
+        const dx = (Math.random() * 100 - 50) + 'px';
+        heart.style.setProperty('--dx', dx);
+        heart.style.left = (40 + (i * 5) + (Math.random() * 10 - 5)) + '%';
+        heart.style.animationDelay = (i * 280) + 'ms';
+        container.appendChild(heart);
+      }
+    }
+
+    /* ENVELOPE OPEN */
+    function openEnvelopeAndShowLetter() {
+      envelope.classList.add('opened');
+      openBtn.style.opacity = '0';
+      openBtn.style.pointerEvents = 'none';
+
+      setTimeout(() => {
+        envelopeSection.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        envelopeSection.style.opacity = '0';
+        envelopeSection.style.transform = 'scale(0.95)';
+
+        setTimeout(() => {
+          envelopeSection.style.display = 'none';
+          letterSheetPage1.classList.add('active');
+          writePage({
+            headerEl: letterHeaderPage1,
+            salutation: page1Salutation,
+            contentEl: letterContentPage1,
+            paragraphs: page1Paragraphs,
+            pauses: page1Pauses,
+            footerEl: letterFooterPage1,
+            controlsEl: page1Controls,
+            heartsEl: completionHeartsPage1
+          });
+        }, 600);
+      }, 700);
+    }
+
+    envelope.addEventListener('click', () => {
+      if (!envelope.classList.contains('opened')) openEnvelopeAndShowLetter();
+    });
+    openBtn.addEventListener('click', () => {
+      if (!envelope.classList.contains('opened')) openEnvelopeAndShowLetter();
+    });
+
+    /* REPLAY PAGE 1 */
+    replayPage1Btn.addEventListener('click', () => {
+      cancelTyping = true;
+      cursor.remove();
+      writePage({
+        headerEl: letterHeaderPage1,
+        salutation: page1Salutation,
+        contentEl: letterContentPage1,
+        paragraphs: page1Paragraphs,
+        pauses: page1Pauses,
+        footerEl: letterFooterPage1,
+        controlsEl: page1Controls,
+        heartsEl: completionHeartsPage1
+      });
+    });
+
+    /* SWITCH TO PAGE 2 */
+    goToPage2Btn.addEventListener('click', async () => {
+      cancelTyping = true;
+      cursor.remove();
+      page1Controls.classList.remove('visible');
+
+      letterSheetPage1.classList.add('turning-out');
+      await wait(700);
+
+      letterSheetPage1.classList.remove('active', 'turning-out');
+      letterSheetPage2.classList.add('active', 'turning-in');
+      await wait(750);
+      letterSheetPage2.classList.remove('turning-in');
+
+      writePage({
+        headerEl: letterHeaderPage2,
+        salutation: page2Salutation,
+        contentEl: letterContentPage2,
+        paragraphs: page2Paragraphs,
+        pauses: page2Pauses,
+        footerEl: letterFooterPage2,
+        controlsEl: page2Controls,
+        heartsEl: completionHeartsPage2
+      });
+    });
+
+    /* GO BACK TO PAGE 1 */
+    backToPage1Btn.addEventListener('click', async () => {
+      cancelTyping = true;
+      cursor.remove();
+      page2Controls.classList.remove('visible');
+
+      letterSheetPage2.classList.add('turning-out');
+      await wait(700);
+
+      letterSheetPage2.classList.remove('active', 'turning-out');
+      letterSheetPage1.classList.add('active', 'turning-in');
+      await wait(750);
+      letterSheetPage1.classList.remove('turning-in');
+
+      page1Controls.classList.add('visible');
+    });
+
+    /* FULL RESET */
+    fullResetBtn.addEventListener('click', async () => {
+      cancelTyping = true;
+      cursor.remove();
+
+      letterSheetPage1.classList.remove('active');
+      letterSheetPage2.classList.remove('active');
+      page1Controls.classList.remove('visible');
+      page2Controls.classList.remove('visible');
+
+      letterContentPage1.innerHTML = '';
+      letterHeaderPage1.textContent = '';
+      letterContentPage2.innerHTML = '';
+      letterHeaderPage2.textContent = '';
+
+      await wait(350);
+
+      envelope.classList.remove('opened');
+      envelopeSection.style.display = 'flex';
+      envelopeSection.style.opacity = '1';
+      envelopeSection.style.transform = 'scale(1)';
+      openBtn.style.opacity = '1';
+      openBtn.style.pointerEvents = 'auto';
+    });
+
+    /* SOFT PROCEDURAL PIANO (WEB AUDIO API) */
+    let audioCtx = null;
+    let isPlaying = false;
+    let noteTimer = null;
+
+    const melodyScale = [
+      293.66, 369.99, 440.00, 554.37, 587.33, 739.99,
+      246.94, 293.66, 369.99, 440.00, 493.88,
+      220.00, 277.18, 329.63, 440.00, 554.37,
+      196.00, 246.94, 293.66, 369.99, 440.00
+    ];
+
+    function playSoftNote(frequency) {
+      if (!audioCtx) return;
+      const now = audioCtx.currentTime;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(frequency, now);
+
+      gain.gain.setValueAtTime(0, now);
+      gain.gain.linearRampToValueAtTime(0.08, now + 0.04);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.2);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      osc.start(now);
+      osc.stop(now + 2.4);
+    }
+
+    function startMusic() {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!audioCtx) audioCtx = new AudioContextClass();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+
+      isPlaying = true;
+      musicToggle.classList.add('playing');
+      musicToggle.title = 'Mute melody';
+
+      let noteIndex = 0;
+      function stepMelody() {
+        if (!isPlaying) return;
+        const note = melodyScale[noteIndex % melodyScale.length];
+        playSoftNote(note);
+        noteIndex++;
+        const delay = 600 + Math.random() * 200;
+        noteTimer = setTimeout(stepMelody, delay);
+      }
+      stepMelody();
+    }
+
+    function stopMusic() {
+      isPlaying = false;
+      musicToggle.classList.remove('playing');
+      musicToggle.title = 'Play soft romantic melody';
+      if (noteTimer) clearTimeout(noteTimer);
+    }
+
+    musicToggle.addEventListener('click', () => {
+      if (isPlaying) {
+        stopMusic();
+      } else {
+        startMusic();
+      }
+    });
+  </script>
+</body>
+</html>
+</html>
